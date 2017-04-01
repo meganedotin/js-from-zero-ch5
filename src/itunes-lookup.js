@@ -10,15 +10,20 @@ export default function lookup (q) {
   const encoded = window.encodeURI(query)
   const url = `${apiBase}?country=JP&media=music&term=${encoded}`
 
+  /** 直前と同じくエリーの場合はキャッシュしている結果を返す */
   if (query === lastQuery) return Promise.resolve(lastResults)
 
   lastQuery = query
 
+  /**
+   * iTunes API からデータを取得
+   * CORS非対応のため、fetchの代わりにfetchJsonpを使う
+   */
   return fetchJsonp(url)
     .then(response => response.json())
     .then(data => {
       const results = data.results
-        .sort((a, b) => b.trackId - a.trackId)
+        .sort((a, b) => b.trackId - a.trackId) // 新しい順にソート
         .map(song => ({
           title: song.trackName,
           artist: song.artistName,

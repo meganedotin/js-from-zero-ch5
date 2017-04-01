@@ -8,22 +8,17 @@
 
   <script>
     this.isPlaying = false
+
+    /** カバー画像のクリックで再生・停止 */
     this.toggle = e => {
-      if (this.isPlaying){
-        pause()
-      } else {
-        play()
-      }
+      const isPlaying = !this.isPlaying
+      if (isPlaying) this.refs.preview.play()
+      else this.refs.preview.pause()
+      this.update({isPlaying})
     }
-    const play = () => {
-      this.update({isPlaying: true})
-      this.refs.preview.play()
-    }
-    const pause = () => {
-      this.update({isPlaying: false})
-      this.refs.preview.pause()
-    }
+
     this.on('mount', () => {
+      /** 音楽終了時、isPlayingをfalseに戻す */
       this.refs.preview.onended = () => {
         this.update({isPlaying: false})
       }

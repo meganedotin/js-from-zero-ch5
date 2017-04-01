@@ -11,12 +11,18 @@
   <script>
     import lookup from './itunes-lookup.js'
 
+    /** デフォルトの表示に使う検索クエリ */
     const defaultQuery = 'clean bandid'
+
+    /** ここに検索結果を保持 */
     this.results = []
 
+    /** タグのマウント時に実行 */
     this.on('mount', () => {
       lookup(defaultQuery).then(results => this.update({results}))
     })
+
+    /** 検索フィールドでエンターキーが押されると、検索実行 */
     this.keyup = e => {
       if (e.keyCode !== 13) return
       lookup(e.target.value).then(results => this.update({results}))
