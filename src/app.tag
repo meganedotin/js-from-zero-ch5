@@ -8,7 +8,12 @@
 
   <p if={!results.length}>曲が見つかりません</p>
 
+  <footer>
+    <time>{datetime}</time>
+  </footer>
+
   <script>
+    import moment from 'moment'
     import lookup from './itunes-lookup.js'
 
     /** デフォルトの表示に使う検索クエリ */
@@ -16,16 +21,23 @@
 
     /** ここに検索結果を保持 */
     this.results = []
+    this.datetime = ''
 
     /** タグのマウント時に実行 */
     this.on('mount', () => {
-      lookup(defaultQuery).then(results => this.update({results}))
+      lookup(defaultQuery).then(results => this.update({
+        results,
+        datetime: moment().format('YYYY/MM/DD hh:mm:ss')
+      }))
     })
 
     /** 検索フィールドでエンターキーが押されると、検索実行 */
     this.keyup = e => {
       if (e.keyCode !== 13) return
-      lookup(e.target.value).then(results => this.update({results}))
+      lookup(e.target.value).then(results => this.update({
+        results,
+        datetime: moment().format('YYYY/MM/DD hh:mm:ss')
+      }))
     }
   </script>
 
@@ -62,6 +74,15 @@
       flex-basis: 7em;
       flex-grow: 1;
       margin: .5em;
+    }
+    footer {
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+      margin-top: 1em;
+    }
+    time {
+      color: gray;
     }
   </style>
 </app>
