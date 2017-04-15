@@ -1,44 +1,10 @@
 <app>
-  <h1>iTunes楽曲検索</h1>
-  <input type="search" onkeyup={keyup} placeholder="タイトル・アーティスト">
-
-  <section if={results.length}>
-    <song each={results} cover={cover} link={link} title={title} artist={artist} preview={preview}/>
-  </section>
-
-  <p if={!results.length}>曲が見つかりません</p>
-
-  <footer>
-    <time>{datetime}</time>
-  </footer>
 
   <script>
     import moment from 'moment'
     import lookup from './itunes-lookup.js'
 
-    /** デフォルトの表示に使う検索クエリ */
-    const defaultQuery = 'clean bandid'
-
-    /** ここに検索結果を保持 */
-    this.results = []
-    this.datetime = ''
-
-    /** タグのマウント時に実行 */
-    this.on('mount', () => {
-      lookup(defaultQuery).then(results => this.update({
-        results,
-        datetime: moment().format('YYYY/MM/DD hh:mm:ss')
-      }))
-    })
-
-    /** 検索フィールドでエンターキーが押されると、検索実行 */
-    this.keyup = e => {
-      if (e.keyCode !== 13) return
-      lookup(e.target.value).then(results => this.update({
-        results,
-        datetime: moment().format('YYYY/MM/DD hh:mm:ss')
-      }))
-    }
+    // ここにコードを書く
   </script>
 
   <style>

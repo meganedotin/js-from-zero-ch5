@@ -15,23 +15,5 @@ export default function lookup (q) {
 
   lastQuery = query
 
-  /**
-   * iTunes API からデータを取得
-   * CORS非対応のため、fetchの代わりにfetchJsonpを使う
-   */
-  return fetchJsonp(url)
-    .then(response => response.json())
-    .then(data => {
-      const results = data.results
-        .sort((a, b) => b.trackId - a.trackId) // 新しい順にソート
-        .map(song => ({
-          title: song.trackName,
-          artist: song.artistName,
-          cover: song.artworkUrl100,
-          preview: song.previewUrl,
-          link: song.trackViewUrl
-        }))
-      lastResults = results
-      return results
-    })
+  // ここにコードを書く
 }
